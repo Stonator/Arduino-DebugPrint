@@ -3,9 +3,9 @@
 #define _DebugPrint_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
-#include "arduino.h"
+    #include "arduino.h"
 #else
-#include "WProgram.h"
+    #include "WProgram.h"
 #endif
 
 #include <Print.h>
@@ -14,22 +14,17 @@
 class CDebugPrint : public Print
 {
 private:
-  Print *m_pDebugPrint;
+    Print *m_pDebugPrint;
 
 private:
-  CDebugPrint();
+    CDebugPrint();
 
 public:
-  CDebugPrint(Print *p_pDebugPrint);
+    CDebugPrint(Print *p_pDebugPrint);
 
-  // Overrides
+    // Overrides
 public:
-  virtual size_t write(uint8_t c)
-  {
-    if(m_pDebugPrint)
-      return(m_pDebugPrint->write(c));
-    return(0);
-  }
+    virtual size_t write(uint8_t c);
 };
 
 // Define and initialize a debug instance with the name "Debug" in your application. Set it to zero if debugging is not used.
@@ -41,11 +36,11 @@ extern CDebugPrint *DebugPrint;
 
 // Helper macros for debug printing
 #ifndef NDEBUG
-  #define DPRINT(...)    (DebugPrint != 0 ? DebugPrint->print(__VA_ARGS__) : 0)   // debug print
-  #define DPRINTLN(...)  (DebugPrint != 0 ? DebugPrint->println(__VA_ARGS__) : 0) // debug print with new line
+    #define DPRINT(...)    (DebugPrint != 0 ? DebugPrint->print(__VA_ARGS__) : 0)   // debug print
+    #define DPRINTLN(...)  (DebugPrint != 0 ? DebugPrint->println(__VA_ARGS__) : 0) // debug print with new line
 #else
-  #define DPRINT(...)
-  #define DPRINTLN(...)
+    #define DPRINT(...)
+    #define DPRINTLN(...)
 #endif
 
 
@@ -56,5 +51,8 @@ extern CDebugPrint *DebugPrint;
 // const char FlashString[] PROGMEM = { "string" };
 // Serial.print(FS(FlashString));
 
+// Use F("") type strings for logging to move strings into flash instead of RAM
+// Example:
+// DPRINTLN(F("My debug string in flash memory"));
 
 #endif
