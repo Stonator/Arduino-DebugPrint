@@ -45,7 +45,7 @@ extern CDebugPrint *DebugPrint;
 
 
 // Flash string utility macro, see https://forum.arduino.cc/index.php?topic=110307.0
-#define FS(x) (__FlashStringHelper*)(x) // Convert a string stored in Flash (PROGMEM) to a flash string helper pointer
+#define FS(x) (const __FlashStringHelper*)(x) // Convert a string stored in Flash (PROGMEM) to a flash string helper pointer
 
 // Example:
 // const char FlashString[] PROGMEM = { "string" };
